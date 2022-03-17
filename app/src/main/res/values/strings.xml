@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name" translatable="false">CrowdinTest</string>
+    <string name="main_text">Main Text</string>
+</resources>
