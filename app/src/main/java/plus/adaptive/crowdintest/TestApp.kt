@@ -7,22 +7,13 @@ import com.crowdin.platform.CrowdinConfig
 import com.crowdin.platform.LoadingStateListener
 import com.crowdin.platform.data.remote.NetworkType
 
+
 class TestApp : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
 
         // Crowdin
-        Crowdin.registerDataLoadingObserver(object: LoadingStateListener {
-            override fun onDataChanged() {
-                Log.i("CrowdinSDK", "onDataChanged")
-            }
-
-            override fun onFailure(throwable: Throwable) {
-                Log.e("CrowdinSDK", "onFailure")
-            }
-        })
-
         Crowdin.init(
             applicationContext,
             CrowdinConfig.Builder()
@@ -32,8 +23,14 @@ class TestApp : MultiDexApplication() {
                 .build()
         )
 
-        Crowdin.forceUpdate(this) {
-            Log.i("CrowdinSDK", "onUpdated")
-        }
+        Crowdin.registerDataLoadingObserver(object: LoadingStateListener {
+            override fun onDataChanged() {
+                Log.e("CrowdinSDK", "onDataChanged")
+            }
+
+            override fun onFailure(throwable: Throwable) {
+                Log.e("CrowdinSDK", "onFailure")
+            }
+        })
     }
 }

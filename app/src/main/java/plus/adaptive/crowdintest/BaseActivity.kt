@@ -12,20 +12,15 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun getDelegate() = BaseContextWrappingDelegate(super.getDelegate())
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(Crowdin.wrapContext(newBase))
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(
+            newBase?.let {
+                Crowdin.wrapContext(
+                    it.localized("tr")
+                )
+            }
+        )
     }
-
-//    override fun attachBaseContext(newBase: Context?) {
-//        super.attachBaseContext(
-//            newBase?.let {
-////                Crowdin.wrapContext(it)
-//                Crowdin.wrapContext(
-//                    it.localized("ru")
-//                )
-//            }
-//        )
-//    }
 
     private fun Context.localized(lang: String) : Context {
         val locale = Locale(lang, Locale.getDefault().country)
